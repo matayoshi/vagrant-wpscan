@@ -1,0 +1,5 @@
+---
+- name: update all package
+  sudo: yes
+  apt: >
+    upgrade=dist

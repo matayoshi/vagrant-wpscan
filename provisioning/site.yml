@@ -1,0 +1,5 @@
+---
+- hosts: all
+  tasks:
+    - include: roles/common/tasks/main.yml
+    - include: roles/wpscan/tasks/main.yml

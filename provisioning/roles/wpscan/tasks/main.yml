@@ -1,0 +1,45 @@
+---
+# wpscan 
+- name: install dependency package
+  sudo: yes
+  apt: >
+    name={{ item }}
+    state=latest
+  with_items:
+    - libcurl4-openssl-dev
+    - libxml2
+    - libxml2-dev
+    - libxslt1-dev
+    - ruby-dev
+    - build-essential
+    - libgmp-dev
+    - git
+- name: get wpscan source
+  sudo: no
+  git: >
+    repo=https://github.com/wpscanteam/wpscan.git
+    dest={{ ansible_env.HOME }}/wpscan
+    clone=yes
+    update=yes
+- name: install bundler
+  sudo: yes
+  gem: >
+    name=bundler
+    state=latest
+    user_install=no
+# > ansible version 2.0.0
+#    build_flags="--no-ri --no-rdoc"
+
+# > ansible version 2.0.0
+#- name: execute bundler
+#  bundler:
+#    chdir={{ ansible_env.HOME }}/wpscan
+#    state=latest
+#    exclude_groups=test
+
+- name: execute bundler
+  sudo: no
+  shell: >
+    bundle install --without test
+  args:
+    chdir: "{{ ansible_env.HOME }}/wpscan"
