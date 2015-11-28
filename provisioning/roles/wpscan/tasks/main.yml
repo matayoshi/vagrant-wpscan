@@ -43,3 +43,9 @@
     bundle install --without test
   args:
     chdir: "{{ ansible_env.HOME }}/wpscan"
+- name: Update WPScan's databases...
+  sudo: no
+  shell: >
+    ruby wpscan.rb --update
+  args:
+    chdir: "{{ ansible_env.HOME }}/wpscan"
